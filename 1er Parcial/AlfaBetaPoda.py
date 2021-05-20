@@ -68,7 +68,7 @@ def HaceMover(tablero, letra, mover):
     tablero[mover] = letra
 
 def EsGanador(tablero, letra):
-    #Dado un cuadro y una letterra, esta funcion retorn True si la letterra pasada vence el juego
+    # Dado un cuadro y una letterra, esta funcion retorn True si la letterra pasada vence el juego
     # return  ((tablero[7] == letra and tablero[8] == letra and tablero[9] == letra) or #linea de encima
     #          (tablero[4] == letra and tablero[5] == letra and tablero[6] == letra) or #linea de medio horizontal
     #          (tablero[1] == letra and tablero[2] == letra and tablero[3] == letra) or #linea de abajo
@@ -133,19 +133,19 @@ def getMovimientoDelJugador(tablero):
 
     return int(mover)
 
-def getMovimientoAleatorioDeLista(tablero, listaMovimientos):
-    # Retorna un movimento valido aleatorio
-    # Retorna None si no existen movimentos validos posibles
-
-    posiblesMovimientos = []
-    for i in listaMovimientos:
-        if LibreEspacio(tablero, i):
-            posiblesMovimientos.append(i)
-
-    if len(posiblesMovimientos) != 0:
-        return random.choice(posiblesMovimientos)
-    else:
-        return None
+# def getMovimientoAleatorioDeLista(tablero, listaMovimientos):
+#     # Retorna un movimento valido aleatorio
+#     # Retorna None si no existen movimentos validos posibles
+#
+#     posiblesMovimientos = []
+#     for i in listaMovimientos:
+#         if LibreEspacio(tablero, i):
+#             posiblesMovimientos.append(i)
+#
+#     if len(posiblesMovimientos) != 0:
+#         return random.choice(posiblesMovimientos)
+#     else:
+#         return None
 
 def EsTableroLleno(tablero):
     # Retorna True si no existen espacios disponibles en el tablero

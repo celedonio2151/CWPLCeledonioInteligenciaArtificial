@@ -119,8 +119,8 @@ class EigthPuzzleProblem(ProblemaBusqueda):
         for numero in matrix:
 # ===================================================================
         # for numero in '12345678e':          #Original
-            fila_n, columna_n = find_location(filas, numero)
-            fila_n_objetivo, col_n_goal = posiciones_objetivo[numero]
+            fila_n, columna_n = find_location(filas, numero)    # encuentro la posicion actual
+            fila_n_objetivo, col_n_goal = posiciones_objetivo[numero]   # mando a buscar del diccionario(1,1)
 
             distancia += abs(fila_n - fila_n_objetivo) + abs(columna_n - col_n_goal)
 

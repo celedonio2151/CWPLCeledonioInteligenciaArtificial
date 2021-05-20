@@ -58,20 +58,20 @@ class GenesMutantes():
         population = puntuados
 
 
-        selected =  puntuados[(len(puntuados)-self.selecioin):] #Esta linea selecciona los 'n' individuos del final, donde n viene dado por 'pressure'
+        seleccionado =  puntuados[(len(puntuados)-self.selecioin):] #Esta linea selecciona los 'n' individuos del final, donde n viene dado por 'pressure'
 
 
 
         #Se mezcla el material genetico para crear nuevos individuos
         for i in range(len(population)-self.selecioin):
-            punto = random.randint(1,self.largo-1) #Se elige un punto para hacer el intercambio
-            padre = random.sample(selected, 2) #Se eligen dos padres
+            punto = random.randint(0,self.largo-1) #Se elige un punto para hacer el intercambio
+            padre = random.sample(seleccionado, 2) #Se eligen dos padres
             # print(population)
             # print("===============================")
             population[i][:punto] = padre[0][:punto] #Se mezcla el material genetico de los padres en cada nuevo individuo
             population[i][punto:] = padre[1][punto:]
 
-        return population #El array 'population' tiene ahora una nueva poblacion de individuos, que se devuelven
+        return population #El array 'poblacion' tiene ahora una nueva poblacion de individuos, que se devuelven
 # ===================================================================
     def mutation(self,population):
         """
