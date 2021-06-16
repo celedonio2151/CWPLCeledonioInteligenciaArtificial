@@ -183,8 +183,9 @@ class ConvertirPINaVector32bits():
 # ===================================================================
 modelo = []
 print("Ingrese los valores entre 128 y 255 para los 4 codigos:")
-for x in range(4):
-    llave = int(input("Ingrese el  PIN: "))
+for x in range(1,5):
+    print("Ingrese el PIN ",x,": ",end='')
+    llave = int(input(""))
     modelo.append(llave)
 model = ConvertirPINaVector32bits()
 # model8 = model.caracterAsciiLetra(modelo) # Devuelve el modelo en fragmentos de 8
@@ -199,7 +200,7 @@ for x in cadena:
     modeloF.append(int(x))
 # ===================================================================
 ngenes = 32 # Longitud de Genes
-kpoblacion = 60 # Numero de poblacion inicial
+kpoblacion = 100 # Numero de poblacion inicial
 selecionar = 3  # Seleecion prematura para su reproduccion
 valor_mutacion = 0.2    # Valor de mutacion
 poblacion = GenesMutantes(modeloF,ngenes,kpoblacion,selecionar,valor_mutacion)# Objeto de Genes
