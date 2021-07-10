@@ -1,0 +1,11 @@
+El dataset es para predecir si un usuario que visita una oagina en internet es un usuario
+Windows o Mac, costa de 5 caracteristicas que son como tiempo de visualizacion por pagina,
+numero de clicks en anuncios, valor en interaccion con la pagina scroll formularios, numero de paginas vistadas, etc.
+
+X1  duracion por pagina
+X2  numero de paginas visitadas
+X3  acciones con scroll interaccion con la pagina
+X4  Una ponderacion de las acciones
+X5  Numero de click en anuncios
+
+Y   Tiene dos valores 0 o 1     1=Windows   0=Mac
