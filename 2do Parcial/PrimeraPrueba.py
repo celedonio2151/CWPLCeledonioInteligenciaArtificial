@@ -71,9 +71,9 @@ def oneVsAll(X, y, num_labels, lambda_):    # Calculo de las thetas
                                 (X, (y == (c + 1)), lambda_),
                                 jac=True,
                                 # method='BFGS',
-                                # method='TNC',
+                                method='TNC',
                                 # method='Powell',
-                                method='Newton-CG',
+                                # method='Newton-CG',
                                 options=options)
 
         all_theta[c] = res.x

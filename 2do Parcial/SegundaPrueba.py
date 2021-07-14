@@ -31,8 +31,8 @@ print("-"*100)
 print(y[:]," Matriz Y")
 print("-"*100)
 # Configurando parametros necesario
-input_layer_size  = 5  # Entrada de 13 caracteristicas
-hidden_layer_size = 10   # 5 unidades ocultas
+input_layer_size  = 5  # Entrada de 5 caracteristicas
+hidden_layer_size = 10   # 10 unidades ocultas
 num_labels = 3          # 3 etiquetas, de 0 a 2
 
 # Me invento los pesos o thetas aleatorios
@@ -145,8 +145,6 @@ initial_nn_params = np.concatenate([initial_Theta1.ravel(), initial_Theta2.ravel
 #  After you have completed the assignment, change the maxiter to a larger
 #  value to see how more training helps.
 options= {'maxiter': 300}
-
-#  You should also try different values of lambda
 lambda_ = 1 # Coeficiente de parendizaje
 
 # Create "short hand" for the cost function to be minimized
@@ -185,6 +183,9 @@ def predict(Theta1, Theta2, X):
     p = np.argmax(h2, axis=1)
     return p
 # =========Fin de la funcion de predicicon===================================
+# print(Theta1," Thetas de la primera capa")
+# print("-"*100)
+# print(Theta2," Thetas de la segunda capa")
 print("-"*100)
 print("-"*100)
 pred = predict(Theta1, Theta2, X[:,:])
@@ -197,3 +198,4 @@ pred = predict(Theta1, Theta2, XP[:,:])
 print(pred)
 print("-"*100)
 print('Precicion con dataset nuevos: %f' % (np.mean(pred == YP[:]) * 100))
+# ========Predecir con una fiila nueva======================================
