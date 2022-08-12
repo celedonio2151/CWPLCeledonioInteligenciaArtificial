@@ -1,0 +1,46 @@
+.body_global{
+    background-color: #00435f;
+}
+.navbar_primary{
+    width: 98%;
+    max-width: 1920px;
+    background-color: #ffd901;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+.navbar_menu{
+    width: 1280px;
+    margin: 0 auto;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    /* padding: 10px; */
+}
+.navbar_start{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+}
+.navbar_item{
+    font-size: 30px;
+    font-weight: bold;
+}
+.navbar_end{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+#caja_texto_interpretado{
+    width: 1280px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color:red;
+    font-size: 40px;
+}
+#texto_interpretado{
+    padding: 0;
+}

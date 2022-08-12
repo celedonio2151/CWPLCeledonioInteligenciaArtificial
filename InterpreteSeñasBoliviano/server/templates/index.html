@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <style>
+        .body_global {
+            background-color: #00435f;
+        }
+
+        .navbar_primary {
+            width: 98%;
+            max-width: 1920px;
+            background-color: #ffd901;
+            margin: 0 auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .navbar_menu {
+            width: 1345px;
+            margin: 0 auto;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            /* padding: 10px; */
+        }
+
+        .navbar_start {
+            /* border: 1px solid red; */
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar_item {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .navbar_end {
+            /* border: 1px solid red; */
+            display: flex;
+            align-items: center;
+        }
+
+        #caja_texto_interpretado {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: red;
+            font-size: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #texto_interpretado {
+            padding: 0;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            /* background-color: #00ffb3; */
+        }
+
+        .output_canvas {
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body class="body_global">
+    <nav class="navbar_primary">
+        <div class="navbar_menu">
+            <div class="navbar_start">
+                <a class="navbar_item" href="./">Interprete de lenguaje de señas</a>
+            </div>
+            <div class="navbar_end">
+                <div class="button_help">
+                    <a target="_blank" rel="noreferrer" href="https://parzibyte.me/l/fW8zGd" class="button is-primary">
+                        <strong>Soporte y ayuda</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- ------------------------------------------ -->
+    <div class="container">
+        <video class="input_video" style="display: none"></video>
+        <!-- <video class="input_video"></video> -->
+        <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+        <div id="caja_texto_interpretado">
+            <p id="texto_interpretado">???</p>
+        </div>
+    </div>
+
+    <button class="boton">Click me</button>
+
+    <script type="module">
+        if (
+            "mediaDevices" in navigator &&
+            "getUserMedia" in navigator.mediaDevices
+        ) {
+            console.log("Let's get this party started");
+        }
+        navigator.mediaDevices.getUserMedia({ video: true });
+        // -----------------------------------------------------------------------
+        var socket = io.connect("http://127.0.0.1:5000/");
+        $(document).ready(function () {
+            var arrayText = [''];
+            // socket.on("connect", function () {
+            //     socket.send("User has connected!");
+            // });
+            socket.on('connect', function () {
+                socket.emit('json', { data: 'I\'m connected! for send JSON' });
+            });
+            // Escuchamos mensajes del server
+            socket.on("myJsonClient", function (msg) {
+                console.log("Received message: ", msg);
+            });
+            // Escuchamos Json desde el cliente
+            socket.on("textClassClient", function (text) {
+                console.log("text: ", text);
+                document.getElementById(
+                    "texto_interpretado"
+                ).innerHTML = text.classText;
+                // arrayText.push(text.classText);
+            });
+
+            $(".boton").on("click", function () {
+                socket.emit('myEventJson', { data: 'Hola desde el cliente' });
+            });
+            // });
+            // -----------------------------------------------------------------------
+
+            var data = [
+                {
+                    x: 0.990108072757721,
+                    y: 0.9310883283615112,
+                    z: 2.004682642109401e-7,
+                },
+                {
+                    x: 0.8986014127731323,
+                    y: 0.9198487997055054,
+                    z: -0.012632103636860847,
+                },
+                {
+                    x: 0.8149787783622742,
+                    y: 0.8529301881790161,
+                    z: -0.025651350617408752,
+                },
+                {
+                    x: 0.7504576444625854,
+                    y: 0.7925785183906555,
+                    z: -0.03838960453867912,
+                },
+                {
+                    x: 0.6976343393325806,
+                    y: 0.7664895057678223,
+                    z: -0.05290122702717781,
+                },
+                {
+                    x: 0.8347512483596802,
+                    y: 0.7291932106018066,
+                    z: -0.04083734750747681,
+                },
+                {
+                    x: 0.7640723586082458,
+                    y: 0.5921347141265869,
+                    z: -0.06374123692512512,
+                },
+                {
+                    x: 0.7211920619010925,
+                    y: 0.49788740277290344,
+                    z: -0.0760798528790474,
+                },
+                {
+                    x: 0.6903358697891235,
+                    y: 0.42416077852249146,
+                    z: -0.08397258073091507,
+                },
+                {
+                    x: 0.881972074508667,
+                    y: 0.661873996257782,
+                    z: -0.05185219645500183,
+                },
+                {
+                    x: 0.8148215413093567,
+                    y: 0.5007839202880859,
+                    z: -0.07393183559179306,
+                },
+                {
+                    x: 0.767345666885376,
+                    y: 0.39198005199432373,
+                    z: -0.08931764960289001,
+                },
+                {
+                    x: 0.7322988510131836,
+                    y: 0.30503416061401367,
+                    z: -0.0998079776763916,
+                },
+                {
+                    x: 0.9412641525268555,
+                    y: 0.623839795589447,
+                    z: -0.06289201229810715,
+                },
+                {
+                    x: 0.8989697098731995,
+                    y: 0.4479101896286011,
+                    z: -0.09021682292222977,
+                },
+                {
+                    x: 0.8603360056877136,
+                    y: 0.3284834027290344,
+                    z: -0.11159710586071014,
+                },
+                {
+                    x: 0.8278448581695557,
+                    y: 0.2370491623878479,
+                    z: -0.12478495389223099,
+                },
+                {
+                    x: 1.0050303936004639,
+                    y: 0.6110093593597412,
+                    z: -0.07273294031620026,
+                },
+                {
+                    x: 1.0095853805541992,
+                    y: 0.4704803228378296,
+                    z: -0.0966109186410904,
+                },
+                {
+                    x: 1.0025990009307861,
+                    y: 0.3763585090637207,
+                    z: -0.10840006172657013,
+                },
+                {
+                    x: 0.9916239380836487,
+                    y: 0.2956494987010956,
+                    z: -0.11499398201704025,
+                },
+            ];
+
+            // const button = document.querySelector(".boton");
+            // button.addEventListener("click", function (params) {
+            //     console.log("Enviando");
+            // });
+            // ----------------------------------------------------
+            const videoElement =
+                document.getElementsByClassName("input_video")[0]; // hidden
+            const canvasElement =
+                document.getElementsByClassName("output_canvas")[0];
+            const canvasCtx = canvasElement.getContext("2d");
+
+            function onResults(results) {
+                canvasCtx.save();
+                canvasCtx.clearRect(
+                    0,
+                    0,
+                    canvasElement.width,
+                    canvasElement.height
+                );
+                canvasCtx.drawImage(
+                    results.image,
+                    0,
+                    0,
+                    canvasElement.width,
+                    canvasElement.height
+                );
+                if (results.multiHandLandmarks) {
+                    let constadorHands = 0;
+                    let landmarksData;
+                    let mano1;
+                    let mano2;
+                    for (const landmarks of results.multiHandLandmarks) {
+                        drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+                            color: "#00FF00",
+                            lineWidth: 5,
+                        });
+                        drawLandmarks(canvasCtx, landmarks, {
+                            color: "#FF0000",
+                            lineWidth: 2,
+                        });
+                        constadorHands++;
+                        if (constadorHands === 1) {// una sola mano
+                            // console.log("Se detecto 1 mano");
+                            mano1 = landmarks;
+                            // console.log(mano1);
+                            landmarksData = mano1;
+                        } else { // dos manos
+                            // console.log("Se detecto 2 manos");
+                            mano2 = mano1.concat(landmarks);
+                            // console.log(mano2);
+                            landmarksData = mano2;
+                        }
+                        console.log(
+                            "Puntos cap: ",
+                            constadorHands,
+                            " ",
+                            landmarksData
+                        );
+                        console.log("-----------------------------------");
+                    }
+                    // Enviar puntos clave al servidor
+                    socket.emit('myEventPoints', { points: landmarksData });
+
+                    // fetch("http://127.0.0.1:5000/points", {
+                    //     method: "POST",
+                    //     headers: {
+                    //         "Content-Type": "application/json",
+                    //     },
+                    //     body: JSON.stringify({
+                    //         // data: "Elsa you love",
+                    //         data: landmarksData,
+                    //     }),
+                    // })
+                    //     .then((res) => res.json())
+                    //     .then((res) => {
+                    //         // console.log(res);
+                    //         document.getElementById(
+                    //             "texto_interpretado"
+                    //         ).innerHTML = res.data;
+                    //     });
+                } else {
+                    console.log("No se detecto mano");
+                    socket.emit('myEventJson', { data: 'Hola desde el cliente no se detecto mano' });
+                }
+                canvasCtx.restore();
+            }
+
+            const hands = new Hands({
+                locateFile: (file) => {
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+                },
+            });
+            hands.setOptions({
+                maxNumHands: 2,
+                modelComplexity: 1,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5,
+            });
+            hands.onResults(onResults);
+
+            const camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    await hands.send({ image: videoElement });
+                },
+                width: 1280,
+                height: 720,
+            });
+            camera.start();
+        });
+    </script>
+</body>
+
+</html>
